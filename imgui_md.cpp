@@ -790,7 +790,10 @@ bool imgui_md::get_image(image_info& nfo) const
 	//Use m_href to identify images
 	
 	//Example - Imgui font texture
-	nfo.texture_id = ImGui::GetIO().Fonts->TexID;
+	// ImGui v1.92 renamed ImFontAtlas::TexID to ImFontAtlas::TexRef (an
+	// ImTextureRef). Pull the underlying ImTextureID out of the ref so the
+	// pre-1.92 image_info::texture_id field still works.
+	nfo.texture_id = ImGui::GetIO().Fonts->TexRef.GetTexID();
 	nfo.size = { 100,50 };
 	nfo.uv0 = { 0,0 };
 	nfo.uv1 = { 1,1 };
